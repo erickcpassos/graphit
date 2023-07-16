@@ -1,5 +1,5 @@
 const canvasWidth = 400, canvasHeight = 400;
-const nodeRadius = 40;
+const nodeRadius = 20;
 let mode = "MOVE";
 let nodeToAddEdgeFrom = -1;
 
@@ -18,6 +18,12 @@ function setup() {
     for(let i = 0; i < genNodes; i++) {
         nodes.push(new Node(i));
     }
+
+    for(let i = 0; i < genNodes; i++) {
+        for(let j = i+1; j < genNodes; j++) {
+            edges.push(new Edge(i, j));
+        }
+    }
 }
 
 function draw() {
@@ -34,6 +40,11 @@ function keyPressed() {
 
     if(keyCode === 69) {
         mode = "EDGE";
+        return;
+    }
+
+    if(keyCode == 68) {
+        mode = "DELETE";
         return;
     }
 }
@@ -63,8 +74,7 @@ function mousePressed() {
 
         case "EDGE":
             for(let i = nodes.length-1; i >= 0; i--) { // vertices de indices maiores estão acima
-                let d = dist(mouseX, mouseY, nodes[i].x, nodes[i].y);
-                if(d < nodeRadius) {
+                if(nodes[i].wasClicked(mouseX, mouseY)) {
                     if(nodeToAddEdgeFrom === -1) { // se não tem ninguém selecionado, selecione o vertice clicado
                         nodes[i].select();
                         nodeToAddEdgeFrom = i;
@@ -78,16 +88,33 @@ function mousePressed() {
             }
             break;
             
+        case "DELETE":
+            for(let i = nodes.length-1; i >= 0; i--) { // vertices de indices maiores estão acima
+                if(nodes[i].wasClicked(mouseX, mouseY)) {
+                    deleteNode(i);
+                    break;
+                }
+            }
+
+            for(let i = edges.length-1; i >= 0; i--) {
+                if(edges[i].wasClicked(mouseX, mouseY)) {
+                    console.log("ARESTA " + i + " FOI CLICADA!");
+                    deleteEdge(i);
+                    break;
+                }
+            }
+
         default:
             for(let i = nodes.length-1; i >= 0; i--) { // vertices de indices maiores estão acima
-                let d = dist(mouseX, mouseY, nodes[i].x, nodes[i].y);
-                if(d < nodeRadius) {
+                if(nodes[i].wasClicked(mouseX, mouseY)) {
                     nodes[i].onClick();
                     break;
                 }
             }
             break;
     }
+
+    
 }
 
 function mouseReleased() {
@@ -96,6 +123,21 @@ function mouseReleased() {
             nodes[i].onRelease();
         }
     }
+}
+
+function deleteNode(index) {
+    edges = edges.filter(edge => (edge.source !== index && edge.destination !== index));
+    edges.forEach(edge => {
+        if(edge.source > index) edge.source--;
+        if(edge.destination > index) edge.destination--;
+    });
+    nodes.splice(index, 1);
+    return;
+}
+
+function deleteEdge(index) {
+    edges.splice(index, 1);
+    return;
 }
 
 function resetNodeSelection() {
@@ -107,8 +149,19 @@ function resetNodeSelection() {
 }
 
 function addNode(x, y, label=nodes.length) {
+    // TODO: resolver problema na label "default"
+    // if(label === null) {
+    //     label = 0;
+    //     for(let i = 0; i < nodes.length; i++) {
+    //         if(label == nodes[i].label)
+    //     }
+    // }
+
+    // for(let i = 0; i < nodes.length; i++) {
+
+    // }
     nodes.forEach((node) => {
-        if(node.label === label) return;
+        if(node.label == label) return;
     });
 
     nodes.push(new Node(label, x, y));
@@ -149,6 +202,32 @@ class Edge {
         
         pop();
     }
+
+    wasClicked(x, y) {
+        let n1 = nodes[this.source], n2 = nodes[this.destination];
+        if(n1.y < n2.y) {
+            [n1, n2] = [n2, n1];
+        }
+
+        if(x < Math.min(n1.x, n2.x) || x > Math.max(n1.x, n2.x) || y < Math.min(n1.y, n2.y) || y > Math.max(n1.y, n2.y)) return false;
+
+        const precision = 0.000000001;
+        let deltaY = n2.y-n1.y, deltaX = (n2.x == n1.x ? precision : n2.x-n1.x);
+        let m = deltaY/deltaX;
+        let b = n1.y - m*n1.x;
+        // y = mx + b
+        let foundY = m*x + b;
+
+        // console.log([n1.x, n1.y], [n2.x, n2.y]);
+        // console.log({m, foundY, y});
+
+        const acceptedDiff = 30;
+        if(abs(y - foundY) <= acceptedDiff) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 class Node {
@@ -168,7 +247,7 @@ class Node {
 
         push();
         if(this.isSelected) strokeWeight(4);
-        circle(this.x, this.y, nodeRadius);
+        circle(this.x, this.y, 2*nodeRadius);
         pop();
         textAlign(CENTER, CENTER);
         text(this.label, this.x, this.y);
@@ -180,6 +259,14 @@ class Node {
 
     deselect() {
         this.isSelected = false;
+    }
+
+    wasClicked(x, y) {
+        let d = dist(x, y, this.x, this.y);
+        if(d < nodeRadius) {
+            return true;
+        }
+        return false;
     }
 
     onClick() {
