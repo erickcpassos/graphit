@@ -1,5 +1,5 @@
 class Node {
-    constructor(label, radius=20, x=random(nodeRadius, canvasWidth-nodeRadius), y=random(nodeRadius, canvasHeight-nodeRadius)) {
+    constructor(label, x=random(nodeRadius, canvasWidth-nodeRadius), y=random(nodeRadius, canvasHeight-nodeRadius), radius=20) {
         this.label= label;
         this.radius = radius;
         this.x = x;
@@ -45,4 +45,5 @@ class Node {
     onRelease() {
         this.isMoving = false;
     }
+
 }
