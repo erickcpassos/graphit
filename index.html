@@ -21,9 +21,11 @@
     <script src="Node.js"></script>
     <script src="Edge.js"></script>
     <script src="script.js"></script>
+    <script src="index.js"></script>
 
     <main>
         <header>
+            <img id="logo" src="assets/android-chrome-256x256.png" alt="Logo do Graphit">
             <h1>Graphit</h1>
         </header>
         <div id="app">
@@ -32,6 +34,7 @@
         </div>
         <div id="info">
             <ul>
+                <li>Modo atual: <span id="current-mode"></span></li>
                 <li>A + Click: adiciona vértice onde foi clicado</li>
                 <li>E + Click: seleciona vértice que originará uma nova aresta. Sem soltar o E, clique em outro vertice para ligar.</li>
             </ul>

@@ -147,25 +147,25 @@ function readTextArea() {
 }
 
 function keyPressed() {
+
     if(keyCode === 65) {
         mode = "NODE";
-        return;
     }
 
     if(keyCode === 69) {
         mode = "EDGE";
-        return;
     }
 
     if(keyCode == 68) {
         mode = "DELETE";
-        return;
     }
 
     if(keyCode == 86) {
         mode = "VALUES";
-        return;
     }
+
+    changeModeUI()
+    return;
 }
 
 function keyReleased() {
@@ -180,7 +180,8 @@ function keyReleased() {
     }
 
     mode = "MOVE";
-    
+
+    changeModeUI()
     return;
 }
 

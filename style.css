@@ -16,6 +16,7 @@ body {
 
 h1 {
     margin-bottom: 1rem;
+    color: rgb(51, 51, 51);
 }
 
 main {
@@ -29,6 +30,10 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#logo {
+    width: 6rem;
 }
 
 #app {
