@@ -66,7 +66,7 @@ function readTextArea() {
         let exists = false;
         graphData.forEach((line) => {
 
-            let l = line.split(' ');
+            let l = line.split(' ').filter((item) => item.length > 0);
             if(l.length >= 2) { // eh uma aresta, sem peso
                 let edgeLabel = "";
                 for(let i = 2; i < l.length; i++) {
@@ -91,7 +91,7 @@ function readTextArea() {
         let exists = false;
 
         graphData.forEach((line) => { // checa cada linha da caixa de texto
-            let l = line.split(' ');
+            let l = line.split(' ').filter((item) => item.length > 0);
 
             if(l.length > 0) {
                 for(let i = 0; i < Math.min(2, l.length); i++) {
