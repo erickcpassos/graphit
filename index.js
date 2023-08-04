@@ -13,3 +13,8 @@ function updateColorList(list) {
         // TODO
     })
 }
+
+function saveCanvasAsPNG() {
+    saveCanvas(canvas, "myGraph", "png");
+    return;
+}

@@ -15,6 +15,7 @@
 
     <title>Graphit</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.js" integrity="sha512-M7uzkKVt12bO/ClDOwaTk0AUwDPmJzjxri/KQKft2cisI6q3zJ4KxX3IfSQXF9Z6WU6NNW67JAljgWrA4WiiOA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -23,6 +24,7 @@
     <script src="Edge.js"></script>
     <script src="script.js"></script>
     <script src="index.js"></script>
+
 
     <main>
         <header>
@@ -34,6 +36,8 @@
             <div id="p5-canvas"></div>
         </div>
         <div id="info">
+            <button onclick="saveCanvasAsPNG()">Baixar imagem</button>
+            <!-- <button onclick="saveCanvasAsPNG(true)">Baixar imagem com desenhos</button> -->
             <ul>
                 <li id="color-list"></li>
                 <li>Modo atual: <span id="current-mode"></span></li>
