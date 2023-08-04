@@ -7,6 +7,9 @@ let nodeToAddEdgeFrom = -1;
 let nodes = []
 let edges = []
 
+let colorList = ["#FFFFFF", "#000000"]
+let currentVertexBackgroundColorIndex = 0;
+
 
 function getRandomInRange(min, max) {
     return Math.random() * (max - min) + min;
@@ -80,6 +83,7 @@ function readTextArea() {
 
     let nxtEdges = [];
 
+    // vê quais vértices e arestas estão no textarea e precisam ser adicionados nas listas "nodes" e "edges"
     graphData.forEach(line => {
         let l = line.split(' ').filter((item) => item.length > 0);
         if(l.length === 1) {
@@ -114,6 +118,7 @@ function readTextArea() {
 
     edges = nxtEdges; // nova lista de arestas já escolhida e aceitando multiedge
 
+    // atribui valores de curva para multiedges
     for(let i = 0; i < nodes.length; i++) {
         for(let j = 0; j < nodes.length; j++) {
             let indexesOfEdgesInTheSamePairOfVertices = [];
@@ -341,7 +346,7 @@ function addNode(x, y, label=null) {
     }
     
 
-    nodes.push(new Node(label, x, y));
+    nodes.push(new Node(label, x, y, colorList[currentVertexBackgroundColorIndex]));
     return;
 }
 

@@ -22,7 +22,6 @@ class Edge {
                 
                 const d = 20;
                 let t = atan2(yb-ya, xb-xa) + HALF_PI;
-                let dx = d*cos(t), dy = d*sin(t); 
 
                 beginShape();
                     vertex(v1.x, v1.y);
@@ -31,10 +30,11 @@ class Edge {
                     quadraticVertex(xm+cos(t)*this.curveValue, ym+sin(t)*this.curveValue, v2.x, v2.y);
                 endShape();
 
-
                 translate(xm, ym);
                 textSize(16);
-                text(this.weight, dx, dy);
+                fill(0)
+                text(this.weight, cos(t)*(this.curveValue+30)/2, sin(t)*(this.curveValue+30)/2);
+                
             pop();
 
             

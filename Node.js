@@ -1,11 +1,12 @@
 class Node {
-    constructor(label, x=random(nodeRadius, canvasWidth-nodeRadius), y=random(nodeRadius, canvasHeight-nodeRadius), radius=20) {
+    constructor(label, x=random(nodeRadius, canvasWidth-nodeRadius), y=random(nodeRadius, canvasHeight-nodeRadius), color='#FFFFFF', radius=20) {
         this.label= label;
         this.radius = radius;
         this.x = x;
         this.y = y
         this.isMoving = false;
         this.isSelected = false;
+        this.color = color;
     }
 
     display() {
@@ -15,11 +16,17 @@ class Node {
         }
 
         push();
-        if(this.isSelected) strokeWeight(4);
-        circle(this.x, this.y, 2*this.radius);
+
+            if(this.isSelected) strokeWeight(4);
+            fill(this.color);
+            circle(this.x, this.y, 2*this.radius);
         pop();
-        textAlign(CENTER, CENTER);
-        text(this.label, this.x, this.y);
+        
+        push();
+            textAlign(CENTER, CENTER);
+            fill(getAppropriateTextColor(this.color));
+            text(this.label, this.x, this.y);
+        pop();
     }
 
     select() {
