@@ -16,15 +16,6 @@ function setup() {
     let canvas = createCanvas(canvasWidth, canvasHeight);
     const genNodes = 4;
     canvas.parent("p5-canvas")
-    // for(let i = 0; i < genNodes; i++) {
-    //     nodes.push(new Node(i));
-    // }
-
-    // for(let i = 0; i < genNodes; i++) {
-    //     for(let j = i+1; j < genNodes; j++) {
-    //         edges.push(new Edge(i, j));
-    //     }
-    // }
 }
 
 function draw() {
@@ -47,16 +38,21 @@ function readTextArea() {
 
             let l = line.split(' ');
             if(l.length >= 2) { // eh uma aresta, sem peso
-                if(+l[0] == nodes[edge.source].label && +l[1] == nodes[edge.destination].label) {
+                let edgeLabel = "";
+                for(let i = 2; i < l.length; i++) {
+                    edgeLabel += l[2].toString();
+                }
+                
+                if(+l[0] == nodes[edge.source].label && +l[1] == nodes[edge.destination].label && edgeLabel.trim() == edge.weight.trim()) {
                     exists = true;
                     return;
                 }
             }
 
         })
-        
+
         if(!exists) {
-            deleteEdge(index);
+            deleteEdge(index, false);
         }
     });
 
@@ -66,13 +62,14 @@ function readTextArea() {
 
         graphData.forEach((line) => { // checa cada linha da caixa de texto
             let l = line.split(' ');
+
             if(l.length > 0) {
-                l.forEach((label) => { // checa cada elemento de cada linha pra cada vertice
-                    if(label == node.label) { 
+                for(let i = 0; i < Math.min(2, l.length); i++) {
+                    if(l[i] == node.label) {
                         exists = true;
                         return;
                     }
-                } )
+                }
             }
         })
         
@@ -81,16 +78,16 @@ function readTextArea() {
         }
     }) 
 
+    let nxtEdges = [];
+
     graphData.forEach(line => {
         let l = line.split(' ').filter((item) => item.length > 0);
         if(l.length === 1) {
             addNode(random(nodeRadius, canvasWidth-nodeRadius), random(nodeRadius, canvasWidth-nodeRadius), l[0]);
         }
-    });
 
-    graphData.forEach(line => {
-        let l = line.split(' ').filter((item) => item.length > 0);
-        if(l.length >= 2) {
+        if(l.length >= 2) { // eh uma aresta
+
             addNode(random(nodeRadius, canvasWidth-nodeRadius), random(nodeRadius, canvasWidth-nodeRadius), l[0]);
             addNode(random(nodeRadius, canvasWidth-nodeRadius), random(nodeRadius, canvasWidth-nodeRadius), l[1]);
 
@@ -98,9 +95,55 @@ function readTextArea() {
             for(let i = 2; i < l.length; i++) {
                 weight += " " + l[i];
             }
-            addEdge(nodes.findIndex((node) => node.label == l[0]), nodes.findIndex((node) => node.label == l[1]), weight);
+
+            weight = weight.trim();
+
+            // busca se já tem uma aresta com as mesmas propriedades visiveis (source, destination, label, directed)
+            let foundEdge = edges.find((edge) => edge.source == l[0] && edge.destination == l[1] && edge.label == weight);
+            if(!foundEdge) {
+                nxtEdges.push(new Edge(nodes.findIndex((node) => node.label == l[0]), nodes.findIndex((node) => node.label == l[1]), weight))
+                // vou adicionar esse edge no proximo frame
+            } else {
+                nxtEdges.push(foundEdge); // se encontrei o edge, boto o mesmo na lista
+                edges.splice(edges.indexOf(foundEdge), 1); // apago esse edge da lista de edges pra fazer uma bijecao textarea <-> edges
+            }
+
         }
-    })
+
+    });
+
+    edges = nxtEdges; // nova lista de arestas já escolhida e aceitando multiedge
+
+    for(let i = 0; i < nodes.length; i++) {
+        for(let j = 0; j < nodes.length; j++) {
+            let indexesOfEdgesInTheSamePairOfVertices = [];
+            edges.forEach((edge, index) => {
+                if((edge.source == i && edge.destination == j) || (edge.source == j && edge.destination == i)) {
+                    indexesOfEdgesInTheSamePairOfVertices.push({index: index, reverse: (edge.source > edge.destination)});
+                }
+            })
+
+            if(indexesOfEdgesInTheSamePairOfVertices.length === 1) {
+                edges[indexesOfEdgesInTheSamePairOfVertices[0].index].curveValue = 0;
+                continue;
+            }
+
+            indexesOfEdgesInTheSamePairOfVertices.forEach((value, index) => {
+                let curveValue = 50*(floor(index/2)+1);
+                
+                if(index%2==1) {
+                    curveValue *= -1;
+                }
+                
+                if(value.reverse) {
+                    curveValue *= -1;
+                }
+
+                edges[value.index].curveValue = curveValue; 
+            })
+        }
+    }
+
 }
 
 function keyPressed() {
@@ -225,7 +268,7 @@ function deleteNode(index) {
 
     let l = graphDataTextArea.value.split('\n');
     l = l.filter(line => {
-        return !line.split(' ').includes(nodes[index].label)
+        return !line.split(' ').slice(0, 2).includes(nodes[index].label)
     }); // reescreve o texto tirando as linhas que envolvem o nó a ser deletado
 
     graphDataTextArea.value = l.join('\n');
@@ -240,7 +283,7 @@ function deleteNode(index) {
     return;
 }
 
-function deleteEdge(index) {
+function deleteEdge(index, isInTextArea=true) {
 
     const graphDataTextArea = document.getElementsByTagName('textarea')[0];
     let lines = graphDataTextArea.value.split('\n');
@@ -248,19 +291,24 @@ function deleteEdge(index) {
     let lineToDelete = -1;
     for(let i = 0; i < lines.length; i++) {
         let line = lines[i].split(' ');
+        let edgeLabel = "";
+        for(let i = 2; i < line.length; i++) {
+            edgeLabel += line[i].toString();
+        }
+        edgeLabel = edgeLabel.trim();
         if(line.length >= 2) {
-            if((line[0] == nodes[edges[index].source].label && line[1] == nodes[edges[index].destination].label) || (line[0] == nodes[edges[index].destination].label && line[1] == nodes[edges[index].source].label)) {
+
+            if((line[0] == nodes[edges[index].source].label && line[1] == nodes[edges[index].destination].label && edgeLabel == edges[index].weight) || (line[0] == nodes[edges[index].destination].label && line[1] == nodes[edges[index].source].label && edgeLabel == edges[index].weight)) {
                 lineToDelete = i;
                 break;
             }
         }
     }
 
-    console.log(lineToDelete);
-
-    if(lineToDelete != -1) {
+    if(lineToDelete != -1 && isInTextArea) {
         lines.splice(lineToDelete, 1);
     }
+
 
     graphDataTextArea.value = lines.join('\n');
     edges.splice(index, 1);
@@ -299,8 +347,8 @@ function addNode(x, y, label=null) {
 function addEdge(source, destination, weight, directed=false) {
     for(let i = 0; i < edges.length; i++) {
         let edge = edges[i];
-        if(edge.source === source && edge.destination === destination) return;
-        if(!directed && edge.source === edge.destination && edge.destination === edge.source) return; 
+        // if(edge.source === source && edge.destination === destination && edge.weight == weight) return;
+        // if(!directed && edge.source === edge.destination && edge.destination === edge.source && edge.weight == weight) return; 
     }
 
     edges.push(new Edge(source, destination, weight, directed));

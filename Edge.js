@@ -1,41 +1,43 @@
 class Edge {
-    constructor(source, destination, weight="", isDirected=false) {
+    constructor(source, destination, weight="", isDirected=false, curveValue=100) {
         this.source = source;
         this.destination = destination;
         this.isDirected = isDirected;
         this.weight = weight;
+        this.curveValue = curveValue;
     }
 
     display() {
         push();
 
             strokeWeight(2);
-            line(nodes[this.source].x, nodes[this.source].y, nodes[this.destination].x, nodes[this.destination].y)
+            let v1 = nodes[this.source], v2 = nodes[this.destination];
 
-
-            // TODO: mostrar texto na reta perpendicular
-            // TODO: rever questão de multiedge com pesos
             push(); 
-                // let dx = (nodes[this.source].x - nodes[this.destination].x), dy = (nodes[this.source].y - nodes[this.destination].y);
-                // if(dx == 0) dx = 0.0000001;
-                // if(dy == 0) dy = 0.0000001;
 
-                // let m1 = dy/dx, m2 = -(1/m1);
 
+                let xa = nodes[this.source].x, xb = nodes[this.destination].x;
+                let ya = nodes[this.source].y, yb = nodes[this.destination].y;
                 let xm = (nodes[this.source].x + nodes[this.destination].x)/2, ym = (nodes[this.source].y + nodes[this.destination].y)/2;
+                
+                const d = 20;
+                let t = atan2(yb-ya, xb-xa) + HALF_PI;
+                let dx = d*cos(t), dy = d*sin(t); 
 
-                // let b1 = nodes[this.source].y - m1 * nodes[this.source].x;
-                // let b2 = b1 - xm * (m2-m1);
+                beginShape();
+                    vertex(v1.x, v1.y);
+                    noFill();
+                    
+                    quadraticVertex(xm+cos(t)*this.curveValue, ym+sin(t)*this.curveValue, v2.x, v2.y);
+                endShape();
 
 
-                // let offsetX = 10;
-                // let offsetY = m2*offsetX + b2;
-            
-                let offsetX = 10, offsetY = 10;
                 translate(xm, ym);
-                textSize(14);
-                text(this.weight, offsetX, offsetY);
+                textSize(16);
+                text(this.weight, dx, dy);
             pop();
+
+            
             
             if(this.isDirected) {
                 push();
@@ -66,8 +68,6 @@ class Edge {
         // y = mx + b
         let foundY = m*x + b;
 
-        // console.log([n1.x, n1.y], [n2.x, n2.y]);
-        // console.log({m, foundY, y});
 
         const acceptedDiff = 30;
         if(abs(y - foundY) <= acceptedDiff) {
