@@ -5,7 +5,7 @@ Não pensei muito no que colocar aqui, mas são coisas que seriam interessantes 
 [x] multiedge visivelmente separados
 [] selfloops visiveis
 [] criar facilmente grafos conhecidos como o K_n, ou K_n,m, anel_n
-[] colorir grafo, mostrar caminho euleriano, hamiltoniano
+[] colorir grafo com <= n cores>, mostrar caminho euleriano, hamiltoniano
 [] desenhar com pincel por cima do grafo (nao afeta os vertices e arestas)
 [] visualizações extra como lista de adj., matriz de adj. e lista de arestas
 [] baixar svg com o grafo

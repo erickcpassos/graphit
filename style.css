@@ -44,6 +44,7 @@ header {
 
 #info {
     padding: 1rem 2rem;
+    font-size: small;
 }
 
 textarea {

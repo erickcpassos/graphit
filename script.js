@@ -10,6 +10,9 @@ let edges = []
 let colorList = ["#FFFFFF", "#000000"]
 let currentVertexBackgroundColorIndex = 0;
 
+const drawingPaths = []
+let currentDrawingPath = [];
+let drawingColor = '#000000';
 
 function getRandomInRange(min, max) {
     return Math.random() * (max - min) + min;
@@ -26,6 +29,30 @@ function draw() {
     readTextArea();
     edges.forEach((edge) => edge.display())
     nodes.forEach((node) => node.display())
+
+
+    if(mode === "DRAW") {
+        push();
+            noFill();
+            if(mouseIsPressed) {
+                const drawingPoint = {
+                    x: mouseX, y: mouseY, color: drawingColor
+                }
+                currentDrawingPath.push(drawingPoint);
+            }
+        
+            drawingPaths.forEach(path => {
+                beginShape();
+                    path.forEach(point => {
+                        stroke(point.color);
+                        strokeWeight(3);
+                        vertex(point.x, point.y);
+                    });
+                endShape();
+            })
+        pop();
+    }
+    
 }
 
 function readTextArea() {
@@ -169,6 +196,14 @@ function keyPressed() {
         mode = "VALUES";
     }
 
+    if(keyCode == 81) {
+        mode = "DRAW";
+    }
+
+    if(keyCode == 67 && mode === "DRAW") {
+        clearAllDrawings();
+    }
+
     changeModeUI()
     return;
 }
@@ -248,6 +283,10 @@ function mousePressed() {
                 
             }
 
+        case "DRAW":
+            currentDrawingPath = [];
+            drawingPaths.push(currentDrawingPath);
+
         default:
             for(let i = nodes.length-1; i >= 0; i--) { // vertices de indices maiores estão acima
                 if(nodes[i].wasClicked(mouseX, mouseY)) {
@@ -258,7 +297,11 @@ function mousePressed() {
             break;
     }
 
-    
+}
+
+function clearAllDrawings() {
+    drawingPaths.splice(0);
+    return;
 }
 
 function mouseReleased() {
