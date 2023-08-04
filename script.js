@@ -286,6 +286,7 @@ function mousePressed() {
         case "DRAW":
             currentDrawingPath = [];
             drawingPaths.push(currentDrawingPath);
+            break;
 
         default:
             for(let i = nodes.length-1; i >= 0; i--) { // vertices de indices maiores estão acima
