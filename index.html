@@ -32,21 +32,26 @@
             <h1>Graphit</h1>
         </header>
         <div id="app">
-            <textarea></textarea>
+            <div id="left-menu">
+                <textarea></textarea>
+                <button id="save-img-button" onclick="saveCanvasAsPNG()">Baixar imagem</button>
+            </div>
+
             <div id="p5-canvas"></div>
+            
+            <div id="info">
+                <!-- <button onclick="saveCanvasAsPNG(true)">Baixar imagem com desenhos</button> -->
+                <ul>
+                    <li id="color-list"></li>
+                    <li>Modo atual: <span id="current-mode"></span></li>
+                    <li>A + Click: adiciona vértice onde foi clicado</li>
+                    <li>E + Click: seleciona vértice que originará uma nova aresta. Sem soltar o E, clique em outro vertice para ligar.</li>
+                    <li>D + Click: deleta vértice ou aresta clicados.</li>
+                    <li>Q + Click: desenha na tela com o mouse. Para apagar tudo, com o Q pressionado, pressione C.</li>
+                </ul>
+            </div>
         </div>
-        <div id="info">
-            <button onclick="saveCanvasAsPNG()">Baixar imagem</button>
-            <!-- <button onclick="saveCanvasAsPNG(true)">Baixar imagem com desenhos</button> -->
-            <ul>
-                <li id="color-list"></li>
-                <li>Modo atual: <span id="current-mode"></span></li>
-                <li>A + Click: adiciona vértice onde foi clicado</li>
-                <li>E + Click: seleciona vértice que originará uma nova aresta. Sem soltar o E, clique em outro vertice para ligar.</li>
-                <li>D + Click: deleta vértice ou aresta clicados.</li>
-                <li>Q + Click: desenha na tela com o mouse. Para apagar tudo, com o Q pressionado, pressione C.</li>
-            </ul>
-        </div>
+        
         
     </main>
     
