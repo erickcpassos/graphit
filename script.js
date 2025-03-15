@@ -14,12 +14,7 @@ const drawingPaths = []
 let currentDrawingPath = [];
 let drawingColor = '#000000';
 
-let robotoMonoFont;
 
-function preload() {
-    // Creates a p5.Font object.
-    robotoMonoFont = loadFont('./assets/RobotoMono-Regular.ttf');
-}
 
 function getRandomInRange(min, max) {
     return Math.random() * (max - min) + min;
@@ -27,7 +22,6 @@ function getRandomInRange(min, max) {
 
 function setup() {
     let canvas = createCanvas(canvasWidth, canvasHeight);
-    textFont(robotoMonoFont);
     const genNodes = 4;
     canvas.parent("p5-canvas")
 }
