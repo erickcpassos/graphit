@@ -59,6 +59,28 @@ footer {
 #info {
     padding: 1rem 2rem;
     font-size: small;
+    width: 20vw;
+}
+
+#representations {
+    margin: 1rem;
+    height: 100%;
+}
+
+#edge-list-frame {
+    /* border: 1px solid black; */
+    min-height: 10%;
+    max-height: 100%;
+    width: 15rem;
+    overflow: auto;
+}
+
+#edge-list {
+    resize: vertical;
+    border: 1px solid black;
+    min-height: 25px;
+    overflow: auto;
+    max-height: 100%;
 }
 
 #representations {
@@ -130,4 +152,25 @@ textarea {
 #info-btn {
     margin-left: auto;
     font-family: monospace;
+}
+
+#save-img-button {
+    background-color: white;
+    border: 2px solid black;
+    padding: 1rem;
+    border-radius: 10px;
+    transition: all 0.05s;
+    width: 90%;
+}
+
+#save-img-button:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+#left-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
