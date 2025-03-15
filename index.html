@@ -22,33 +22,52 @@
     <script src="utilities.js"></script>
     <script src="Node.js"></script>
     <script src="Edge.js"></script>
-    <script src="script.js"></script>
-    <script src="index.js"></script>
-
-
+    
+    <header>
+        <img id="logo" src="assets/android-chrome-256x256.png" alt="Logo do Graphit">
+        <h1>Graphit</h1>
+    </header>
     <main>
-        <header>
-            <img id="logo" src="assets/android-chrome-256x256.png" alt="Logo do Graphit">
-            <h1>Graphit</h1>
-        </header>
         <div id="app">
             <textarea></textarea>
-            <div id="p5-canvas"></div>
-        </div>
-        <div id="info">
-            <button onclick="saveCanvasAsPNG()">Baixar imagem</button>
-            <!-- <button onclick="saveCanvasAsPNG(true)">Baixar imagem com desenhos</button> -->
-            <ul>
-                <li id="color-list"></li>
-                <li>Modo atual: <span id="current-mode"></span></li>
-                <li>A + Click: adiciona vértice onde foi clicado</li>
-                <li>E + Click: seleciona vértice que originará uma nova aresta. Sem soltar o E, clique em outro vertice para ligar.</li>
-                <li>D + Click: deleta vértice ou aresta clicados.</li>
-                <li>Q + Click: desenha na tela com o mouse. Para apagar tudo, com o Q pressionado, pressione C.</li>
-            </ul>
+            <div id="central-area">
+                <div id="p5-canvas"></div>
+                <div id="buttons">
+                    <button onclick="saveCanvasAsPNG()" class="func-btn">Download Image</button>
+                    <button onclick="clearGraph()" class="func-btn">Clear graph</button>
+                    <button id="info-btn" class="func-btn">i</button>
+                </div>
+            </div>
+            <div id="representations">
+                <div id="edge-list-frame">
+                    <p>Edge List</p>
+                    <div id="edge-list"></div>
+                </div>
+            </div>
         </div>
         
     </main>
+
+    <aside id="info-modal" hidden>
+        <ul>
+            <li id="color-list"></li>
+            <li>Current mode: <span id="current-mode"></span></li>
+            <li>A + Click: adds vertex</li>
+            <li>E + Click: seleciona vértice que originará uma nova aresta. Sem soltar o E, clique em outro vertice para ligar.</li>
+            <li>D + Click: deletes clicked node or edge.</li>
+            <li>Q + Click: desenha na tela com o mouse. Para apagar tudo, com o Q pressionado, pressione C.</li>
+        </ul>
+    </aside>
+
+    <footer>
+        <p>
+            Developed by @erickcpassos | 
+            <a href="https://github.com/erickcpassos/graphit" target="_blank">https://github.com/erickcpassos/graphit</a>
+        </p></footer>
+
+    <script src="script.js"></script>
+    <script src="index.js"></script>
+
     
 </body>
 </html>

@@ -143,7 +143,15 @@ function readTextArea() {
 
     });
 
-    edges = nxtEdges; // nova lista de arestas já escolhida e aceitando multiedge
+
+    const didEdgesChange = edges.length == nxtEdges.length && edges.every((edge, index) => (edge.source == nxtEdges[index].source && edge.destination == nxtEdges[index].destination && edge.weight == nxtEdges[index].weight)); 
+
+    if(!didEdgesChange) {
+        edges = nxtEdges;
+        updateUI();
+    }
+
+    // edges = nxtEdges;
 
     // atribui valores de curva para multiedges
     for(let i = 0; i < nodes.length; i++) {
@@ -251,6 +259,7 @@ function mousePressed() {
                         const graphDataTextArea = document.getElementsByTagName('textarea')[0];
                         
                         graphDataTextArea.value += `\n${nodes[nodeToAddEdgeFrom].label} ${nodes[i].label}`;
+
                         resetNodeSelection();
                     }
 
@@ -269,7 +278,6 @@ function mousePressed() {
 
             for(let i = edges.length-1; i >= 0; i--) {
                 if(edges[i].wasClicked(mouseX, mouseY)) {
-                    console.log("ARESTA " + i + " FOI CLICADA!");
                     deleteEdge(i);
                     break;
                 }
@@ -330,6 +338,9 @@ function deleteNode(index) {
         if(edge.destination > index) edge.destination--;
     });
     nodes.splice(index, 1);
+    updateUI();
+
+
     return;
 }
 
@@ -362,6 +373,7 @@ function deleteEdge(index, isInTextArea=true) {
 
     graphDataTextArea.value = lines.join('\n');
     edges.splice(index, 1);
+    updateUI();
 
     return;
 }
@@ -391,17 +403,22 @@ function addNode(x, y, label=null) {
     
 
     nodes.push(new Node(label, x, y, colorList[currentVertexBackgroundColorIndex]));
+    updateUI();
+
     return;
 }
 
 function addEdge(source, destination, weight, directed=false) {
-    for(let i = 0; i < edges.length; i++) {
-        let edge = edges[i];
-        // if(edge.source === source && edge.destination === destination && edge.weight == weight) return;
-        // if(!directed && edge.source === edge.destination && edge.destination === edge.source && edge.weight == weight) return; 
-    }
 
     edges.push(new Edge(source, destination, weight, directed));
+    updateUI();
+
 }
 
-
+function clearGraph() {
+    if(confirm("Are you sure? This will delete your graph and drawings completely!")) {
+        const graphDataTextArea = document.getElementsByTagName('textarea')[0];
+        graphDataTextArea.value = '';
+        clearAllDrawings();
+    }
+}
