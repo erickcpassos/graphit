@@ -25,6 +25,7 @@ class Node {
         push();
             textAlign(CENTER, CENTER);
             fill(getAppropriateTextColor(this.color));
+            textFont('Roboto Mono')
             text(this.label, this.x, this.y);
         pop();
     }
