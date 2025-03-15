@@ -18,7 +18,7 @@ let robotoMonoFont;
 
 function preload() {
     // Creates a p5.Font object.
-    robotoMonoFont = loadFont('/assets/RobotoMono-Regular.ttf');
+    robotoMonoFont = loadFont('./assets/RobotoMono-Regular.ttf');
 }
 
 function getRandomInRange(min, max) {
