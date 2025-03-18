@@ -23,6 +23,7 @@ function getRandomInRange(min, max) {
 function setup() {
     let canvas = createCanvas(canvasWidth, canvasHeight);
     const genNodes = 4;
+    frameRate(60);
     canvas.parent("p5-canvas")
 }
 
@@ -30,7 +31,7 @@ function draw() {
     background(220);
     readTextArea();
     edges.forEach((edge) => edge.display())
-    nodes.forEach((node) => node.display())
+    nodes.forEach((node) => {node.display(); node.goToNextAnimationFrame();})
 
 
     if(mode === "DRAW") {
