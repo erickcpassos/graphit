@@ -138,6 +138,11 @@ textarea {
     cursor: pointer;
 }
 
+.func-btn.selected {
+    background-color: black;
+    color: white;
+}
+
 .func-btn:hover {
     transform: scale(1.05);
 }
@@ -174,6 +179,12 @@ textarea {
 #left-menu {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#mode-buttons {
+    display: flex;
     justify-content: center;
     align-items: center;
 }

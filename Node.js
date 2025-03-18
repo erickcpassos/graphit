@@ -23,7 +23,6 @@ class Node {
             if(this.isSelected) strokeWeight(4);
             fill(this.color);
             circle(this.x, this.y, 2*lerp(0, this.radius, this.scaleAnimationFrames[this.animationFrame]));
-            console.log(this.scaleAnimationFrames[this.animationFrame])
         pop();
         
         push();

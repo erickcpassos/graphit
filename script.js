@@ -37,7 +37,7 @@ function draw() {
     if(mode === "DRAW") {
         push();
             noFill();
-            if(mouseIsPressed) {
+            if(mouseIsPressed && mouseX >= 0 && mouseX <= canvasWidth && mouseY >= 0 && mouseY <= canvasHeight) {
                 const drawingPoint = {
                     x: mouseX, y: mouseY, color: drawingColor
                 }
@@ -237,6 +237,8 @@ function keyReleased() {
 }
 
 function mousePressed() {
+
+    if(mouseX < 0 || mouseY < 0 || mouseX > canvasWidth || mouseY > canvasWidth) return;
 
     switch (mode) { // toma ações diferentes dependendo do MODO atual
         case "NODE":
