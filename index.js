@@ -108,7 +108,8 @@ drawBtn.addEventListener('click', () => {
 
 
 
-let tutorialPage = parseInt(localStorage.getItem("tutorialPage"));
+
+let tutorialPage = parseInt(localStorage.getItem("tutorialPage")) || 0;
 const tutorialPagesHTML = document.getElementsByClassName('tutorial-page');
 const stageDisplayHTML = document.getElementsByClassName('tutorial-stage-square');
 
