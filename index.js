@@ -4,6 +4,7 @@ const edgeBtn = document.getElementById('edge-btn');
 const deleteBtn = document.getElementById('delete-btn');
 const drawBtn = document.getElementById('draw-btn');
 
+
 const UIBtns = [moveBtn, nodeBtn, edgeBtn, deleteBtn, drawBtn];
 
 function resetUIBtns() {
@@ -78,16 +79,6 @@ function saveCanvasAsPNG() {
     return;
 }
 
-const infoBtn = document.querySelector("#info-btn");
-infoBtn.addEventListener('mouseover', () => {
-    const infoModal = document.querySelector("#info-modal");
-    infoModal.hidden = false;
-})
-
-infoBtn.addEventListener('mouseout', () => {
-    const infoModal = document.querySelector("#info-modal");
-    infoModal.hidden = true;
-})
 
 moveBtn.addEventListener('click', () => {
     mode = "MOVE";
@@ -114,3 +105,53 @@ drawBtn.addEventListener('click', () => {
     mode = "DRAW";
     changeModeUI();
 });
+
+
+
+let tutorialPage = parseInt(localStorage.getItem("tutorialPage"));
+const tutorialPagesHTML = document.getElementsByClassName('tutorial-page');
+const stageDisplayHTML = document.getElementsByClassName('tutorial-stage-square');
+
+function showCorrectTutorialPage() {
+
+    if(tutorialPage >= 0 && tutorialPage < tutorialPagesHTML.length) document.querySelector('#tutorial-modal').style.display = 'block';
+
+    if(tutorialPage >= tutorialPagesHTML.length) {
+        document.querySelector('#tutorial-modal').style.display = 'none';
+    }
+
+    for(let i = 0; i < tutorialPagesHTML.length; i++) {
+        if(tutorialPage == i) {
+            tutorialPagesHTML[i].style.display = 'block';
+            stageDisplayHTML[i].classList.add('selected');
+        }
+        else {
+            tutorialPagesHTML[i].style.display = 'none';
+            stageDisplayHTML[i].classList.remove('selected');
+        }
+            
+    }
+
+    localStorage.setItem("tutorialPage", tutorialPage);
+
+}
+
+const infoBtn = document.querySelector("#info-btn");
+infoBtn.addEventListener('click', () => {
+    tutorialPage = 0;
+    showCorrectTutorialPage();
+})
+
+
+document.querySelector('#tutorial-next').addEventListener('click', () => {
+    tutorialPage += 1;
+    showCorrectTutorialPage();
+})
+
+document.querySelector('#tutorial-back').addEventListener('click', () => {
+    if(tutorialPage > 0) tutorialPage -= 1;
+    
+    showCorrectTutorialPage();
+})
+
+showCorrectTutorialPage();

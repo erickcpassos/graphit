@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png?">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png?">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png?">
@@ -12,25 +13,29 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
 
     <link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
     <title>Graphit</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.js" integrity="sha512-M7uzkKVt12bO/ClDOwaTk0AUwDPmJzjxri/KQKft2cisI6q3zJ4KxX3IfSQXF9Z6WU6NNW67JAljgWrA4WiiOA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.js"
+        integrity="sha512-M7uzkKVt12bO/ClDOwaTk0AUwDPmJzjxri/KQKft2cisI6q3zJ4KxX3IfSQXF9Z6WU6NNW67JAljgWrA4WiiOA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
     <script src="utilities.js"></script>
     <script src="Node.js"></script>
     <script src="Edge.js"></script>
-    
+
     <header>
         <div id="logo-things">
-            <img id="logo" src="assets/logo-699.png" alt="Logo do Graphit">
+            <img id="logo" src="./assets/logo-699.png" alt="Logo do Graphit">
             <h1>Graphit</h1>
 
         </div>
@@ -39,11 +44,16 @@
         <div id="app">
             <div>
                 <div id="mode-buttons">
-                    <button id="move-btn" class="func-btn selected">1 | <span><img class="sm-icon" src="assets/icons8-move-50.png"></span></button>
-                    <button id="node-btn" class="func-btn">2 | <span><img class="sm-icon" src="assets/icons8-plus-50.png"></span></button>
-                    <button id="edge-btn" class="func-btn">3 | <span><img class="sm-icon" src="assets/icons8-connect-64.png"></span></button>
-                    <button id="delete-btn" class="func-btn">4 | <span><img class="sm-icon" src="assets/icons8-delete-48.png"></span></button>
-                    <button id="draw-btn" class="func-btn">5 | <span><img class="sm-icon" src="assets/icons8-pencil-48.png"></span></button>
+                    <button id="move-btn" class="func-btn selected">1 | <span><img class="sm-icon"
+                                src="./assets/icons8-move-50.png"></span></button>
+                    <button id="node-btn" class="func-btn">2 | <span><img class="sm-icon"
+                                src="./assets/icons8-plus-50.png"></span></button>
+                    <button id="edge-btn" class="func-btn">3 | <span><img class="sm-icon"
+                                src="./assets/icons8-connect-64.png"></span></button>
+                    <button id="delete-btn" class="func-btn">4 | <span><img class="sm-icon"
+                                src="./assets/icons8-delete-48.png"></span></button>
+                    <button id="draw-btn" class="func-btn">5 | <span><img class="sm-icon"
+                                src="./assets/icons8-pencil-48.png"></span></button>
                 </div>
                 <textarea></textarea>
             </div>
@@ -62,7 +72,7 @@
                 </div>
             </div>
         </div>
-        
+
     </main>
 
     <aside id="info-modal" style="display: none;">
@@ -70,22 +80,90 @@
             <li id="color-list"></li>
             <li>Current mode: <span id="current-mode"></span></li>
             <li>A + Click: adds vertex</li>
-            <li>E + Click: seleciona vértice que originará uma nova aresta. Sem soltar o E, clique em outro vertice para ligar.</li>
+            <li>E + Click: seleciona vértice que originará uma nova aresta. Sem soltar o E, clique em outro vertice para
+                ligar.</li>
             <li>D + Click: deletes clicked node or edge.</li>
             <li>Q + Click: desenha na tela com o mouse. Para apagar tudo, com o Q pressionado, pressione C.</li>
         </ul>
     </aside>
 
+
+    <aside id="tutorial-modal">
+
+        <div id="tutorial-card">
+            <div class="tutorial-page">
+                <h2>Thank you for using Graphit! :D</h2>
+                <p>This website was built by me (@erickcpassos) to be used in graph theory lessons for programming
+                    competitions.</p>
+                <p>Its main goal is to provide a quick way to sketch and manipulate simple graphs, along with displaying
+                    information that is useful for people learning about graph theory or preparing for algorithmic
+                    competitions.</p>
+                <p>This quick tutorial introduces you to the functionalities and shortcuts, but I hope this web app is
+                    easy to use intuitively.</p>
+                <p>Best wishes, Erick</p>
+            </div>
+            <div class="tutorial-page">
+                <h2>Add a new node</h2>
+                <p>To add a new node in the graph, select the ADD option (clicking the 2 button or holding the '2' key) and click in the canvas area. The new node will be automatically assigned a number as a label. </p>
+                <p>New nodes will also be added if they are referred to in the text input. The text input can also be used to change the label of nodes created by clicking.</p>
+            </div>
+            <div class="tutorial-page">
+                <h2>Add a new edge</h2>
+                <p>To add a new edge in the graph, select the EDGE option (clicking the 3 button or holding the '3' key) and click on the node that will be the edge's source. After that, click another node to be the edge's destination. A new edge will be drawn between both edges.</p>
+                <p>It is also possible to add more than one edge between the same pair of vertices. Additionally, a value can be added to an edge by editing the text input, adding the value after the destination node.</p>
+            </div>
+            <div class="tutorial-page">
+                <h2>Deleting things</h2>
+                <p>The DELETE mode can be accessed by selecting option 4. In this mode, you can click any node or edge and it will be promptly deleted from the graph.</p>
+                <p>Note that removing a node will also delete any edges connected to it.</p>
+            </div>
+            <div class="tutorial-page">
+                <h2>Drawing (yay!)</h2>
+                <p>Sometimes, ideas can just be conveyed the right way with some drawings.</p>
+                <p>To draw on top of the graph, select option 5. You can draw freely within the canvas using the mouse.</p>
+                <p>To delete your drawings, press C (for clear) while you are in the drawing mode.</p>
+                <p>If you want to download the graph image with your drawings in it, ensure you are in the draw mode when pressing 'Download Image'</p>
+            </div>
+
+            <div class="tutorial-page">
+                <h2>That's all!</h2>
+                <p>Now you should know the basics of Graphit and be able to use it to sketch your graphs.</p>
+                <p>To open this tutorial again, just click the 'i' info button in the menu.</p>
+            </div>
+
+            <div>
+                <div id="tutorial-btns">
+                    <button class="func-btn" id="tutorial-back">
+                        < Back</button>
+                            <button class="func-btn" id="tutorial-next">Next ></button>
+                </div>
+    
+                <div id="tutorial-stages">
+                    <span class="tutorial-stage-square selected"></span><span class="tutorial-stage-square"></span><span
+                        class="tutorial-stage-square"></span><span class="tutorial-stage-square"></span><span
+                        class="tutorial-stage-square"></span><span
+                        class="tutorial-stage-square"></span>
+                </div>
+            </div>
+            
+        </div>
+
+    </aside>
+
     <footer>
         <p>
-            Developed by @erickcpassos | 
-            <a href="https://github.com/erickcpassos/graphit" target="_blank">https://github.com/erickcpassos/graphit</a>
+            Developed by @erickcpassos |
+            <a href="https://github.com/erickcpassos/graphit"
+                target="_blank">https://github.com/erickcpassos/graphit</a>
         </p>
     </footer>
+
+
 
     <script src="./script.js"></script>
     <script src="./index.js"></script>
 
-    
+
 </body>
+
 </html>
