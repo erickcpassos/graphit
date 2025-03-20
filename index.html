@@ -29,18 +29,21 @@
     <script src="Edge.js"></script>
     
     <header>
-        <img id="logo" src="assets/android-chrome-256x256.png" alt="Logo do Graphit">
-        <h1>Graphit</h1>
+        <div id="logo-things">
+            <img id="logo" src="assets/logo-699.png" alt="Logo do Graphit">
+            <h1>Graphit</h1>
+
+        </div>
     </header>
     <main>
         <div id="app">
             <div>
                 <div id="mode-buttons">
-                    <button id="move-btn" class="func-btn selected">Move</button>
-                    <button id="node-btn" class="func-btn">Node</button>
-                    <button id="edge-btn" class="func-btn">Edge</button>
-                    <button id="delete-btn" class="func-btn">Delete</button>
-                    <button id="draw-btn" class="func-btn">Draw</button>
+                    <button id="move-btn" class="func-btn selected">1 | <span><img class="sm-icon" src="assets/icons8-move-50.png"></span></button>
+                    <button id="node-btn" class="func-btn">2 | <span><img class="sm-icon" src="assets/icons8-plus-50.png"></span></button>
+                    <button id="edge-btn" class="func-btn">3 | <span><img class="sm-icon" src="assets/icons8-connect-64.png"></span></button>
+                    <button id="delete-btn" class="func-btn">4 | <span><img class="sm-icon" src="assets/icons8-delete-48.png"></span></button>
+                    <button id="draw-btn" class="func-btn">5 | <span><img class="sm-icon" src="assets/icons8-pencil-48.png"></span></button>
                 </div>
                 <textarea></textarea>
             </div>
@@ -62,7 +65,7 @@
         
     </main>
 
-    <aside id="info-modal" hidden>
+    <aside id="info-modal" style="display: none;">
         <ul>
             <li id="color-list"></li>
             <li>Current mode: <span id="current-mode"></span></li>
@@ -77,7 +80,8 @@
         <p>
             Developed by @erickcpassos | 
             <a href="https://github.com/erickcpassos/graphit" target="_blank">https://github.com/erickcpassos/graphit</a>
-        </p></footer>
+        </p>
+    </footer>
 
     <script src="./script.js"></script>
     <script src="./index.js"></script>

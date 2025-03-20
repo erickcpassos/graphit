@@ -1,4 +1,4 @@
-const canvasWidth = 500, canvasHeight = 500;
+let canvasWidth = 500, canvasHeight = 500;
 const nodeRadius = 40;
 
 let mode = "MOVE";
@@ -21,10 +21,29 @@ function getRandomInRange(min, max) {
 }
 
 function setup() {
+    if(windowWidth <= 768) {
+        canvasWidth = windowWidth;
+        canvasHeight = windowHeight-150;
+    } else {
+        canvasWidth = canvasHeight = 0.7*min(windowHeight, windowWidth);
+    }
     let canvas = createCanvas(canvasWidth, canvasHeight);
     const genNodes = 4;
     frameRate(60);
     canvas.parent("p5-canvas")
+}
+
+function windowResized() {
+
+    if(windowWidth <= 768) {
+        canvasWidth = windowWidth;
+        canvasHeight = windowHeight-150;
+    } else {
+        canvasWidth = canvasHeight = 0.7*min(windowHeight, windowWidth);
+    }
+
+    console.log(canvasWidth);
+    resizeCanvas(canvasWidth, canvasHeight);
 }
 
 function draw() {
@@ -190,6 +209,12 @@ function readTextArea() {
 }
 
 function keyPressed() {
+
+    if(keyCode === 49)      mode = "MOVE";
+    else if(keyCode === 50) mode = "NODE";
+    else if(keyCode === 51) mode = "EDGE";
+    else if(keyCode === 52) mode = "DELETE";
+    else if(keyCode === 53) mode = "DRAW";
 
     if(keyCode === 65) {
         mode = "NODE";
