@@ -190,7 +190,8 @@ footer {
 }
 
 textarea {
-    margin: 1rem;
+    margin-right: 1rem;
+    margin-top: 0.5rem;
     height: 250px;
     resize: vertical;
 }
