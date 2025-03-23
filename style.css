@@ -128,11 +128,11 @@ footer {
 }
 
 .sm-icon {
-    width: 1.5rem;
+    width: 1.75rem;
 }
 
 .func-btn.selected .sm-icon {
-    filter: brightness(0) invert(1);
+    filter: brightness(0) invert(100%)
 }
 
 #app {
