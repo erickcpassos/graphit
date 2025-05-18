@@ -75,7 +75,7 @@ function createEdgeListItem(edge, index) {
 }
 
 function saveCanvasAsPNG() {
-    saveCanvas(canvas, "myGraph", "png");
+    saveCanvas(canvas, "myG ph", "png");
     return;
 }
 

@@ -7,6 +7,8 @@ let nodeToAddEdgeFrom = -1;
 let nodes = []
 let edges = []
 
+let isGraphDirected = false;
+
 let colorList = ["#FFFFFF", "#000000"]
 let currentVertexBackgroundColorIndex = 0;
 
@@ -154,7 +156,7 @@ function readTextArea() {
             // busca se já tem uma aresta com as mesmas propriedades visiveis (source, destination, label, directed)
             let foundEdge = edges.find((edge) => edge.source == l[0] && edge.destination == l[1] && edge.label == weight);
             if(!foundEdge) {
-                nxtEdges.push(new Edge(nodes.findIndex((node) => node.label == l[0]), nodes.findIndex((node) => node.label == l[1]), weight))
+                nxtEdges.push(new Edge(nodes.findIndex((node) => node.label == l[0]), nodes.findIndex((node) => node.label == l[1]), weight, isGraphDirected))
                 // vou adicionar esse edge no proximo frame
             } else {
                 nxtEdges.push(foundEdge); // se encontrei o edge, boto o mesmo na lista
@@ -177,6 +179,20 @@ function readTextArea() {
 
     // atribui valores de curva para multiedges
     for(let i = 0; i < nodes.length; i++) {
+
+        let selfLoopEdgesAtI = [];
+        edges.forEach((edge, index) => {
+            if(edge.source == i && edge.source == edge.destination) {
+                selfLoopEdgesAtI.push(index);
+            }
+        });
+
+        
+        selfLoopEdgesAtI.forEach((index, num) => {
+            edges[index].selfLoopIndex = num+1;
+        })
+
+
         for(let j = 0; j < nodes.length; j++) {
             let indexesOfEdgesInTheSamePairOfVertices = [];
             edges.forEach((edge, index) => {
@@ -438,7 +454,7 @@ function addNode(x, y, label=null) {
     return;
 }
 
-function addEdge(source, destination, weight, directed=false) {
+function addEdge(source, destination, weight, directed=isGraphDirected) {
 
     edges.push(new Edge(source, destination, weight, directed));
     updateUI();
