@@ -9,7 +9,7 @@
 </center>
 
 ## Funções do Graphit
-Não pensei muito no que colocar aqui, mas são coisas que seriam interessantes a princípio
+
 - [ ] cores nos vertices e arestas
 - [x] varios valores na aresta (pelo menos 2)
 - [x] multiedge visivelmente separados
